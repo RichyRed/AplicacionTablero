@@ -42,8 +42,8 @@ export default function NavBar({toggle}) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Photos
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: "center" }}>
+            Tablero
           </Typography>
           {auth && (
             <div>
