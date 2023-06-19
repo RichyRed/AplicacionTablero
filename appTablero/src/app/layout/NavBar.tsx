@@ -8,7 +8,7 @@ const Navbar = () => {
     <AppBar position="fixed">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: "center" }}>
-          Tablero
+          TaskIsi
         </Typography>
       </Toolbar>
     </AppBar>

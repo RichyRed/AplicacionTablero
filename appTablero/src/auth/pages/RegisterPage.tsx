@@ -3,7 +3,7 @@ import { AuthLayout } from "../layout/AuthLayout";
 
 export const RegisterPage = () => {
   return (
-    <AuthLayout title="Registrarse a Souvenir">
+    <AuthLayout title="Registrate en TaskIsi">
       <form>
         <Grid container>
           <Grid item xs={12} sx={{ mt: 2 }}>

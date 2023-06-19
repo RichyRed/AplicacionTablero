@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Card, CardContent, Typography, TextField, Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";

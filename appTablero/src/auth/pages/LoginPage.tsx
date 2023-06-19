@@ -38,7 +38,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <AuthLayout title="Ingresa a Tablerito">
+    <AuthLayout title="Ingresa a TaskIsi">
       <form>
         <Grid container>
           <Grid item xs={12} sx={{ mt: 2 }}>

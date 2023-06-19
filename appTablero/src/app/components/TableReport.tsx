@@ -1,14 +1,32 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Button, TextField } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import Column from "./Column";
 
 const TableReport: React.FC = () => {
-  const [columns, setColumns] = useState<{ [key: string]: { name: string, tasks: { id: number; title: string; description: string }[] } }>({
+  const [columns, setColumns] = useState<{ [key: string]: { name: string; tasks: { id: number; title: string; description: string }[] } }>({
     "column1": { name: "Columna 1", tasks: [] },
   });
   const [newColumnName, setNewColumnName] = useState("");
   const [columnCount, setColumnCount] = useState(1);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const storedColumns = localStorage.getItem("columns");
+    if (storedColumns) {
+      setColumns(JSON.parse(storedColumns));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("columns", JSON.stringify(columns));
+  }, [columns]);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   const addColumn = () => {
     if (newColumnName.trim() !== "") {
@@ -48,6 +66,7 @@ const TableReport: React.FC = () => {
           value={newColumnName}
           onChange={handleColumnNameChange}
           style={{ marginRight: "10px" }}
+          inputRef={inputRef} // Assign the input ref here
         />
         <Button variant="contained" onClick={addColumn}>
           Añadir columna
