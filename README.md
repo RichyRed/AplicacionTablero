@@ -32,6 +32,6 @@ TaskIsi es la herramienta perfecta para mantenerte organizado y productivo.
 ![image](https://github.com/RichyRed/AplicacionTablero/assets/84047015/4d7ba26a-6c44-4a9e-be5e-77cc5b56cd9f)
 
 ## Link video 
-
+* https://drive.google.com/drive/folders/15NI0bwg795ruNzfdgHhIjwZsZ9Xg6gf3?usp=sharing
 
 Esperamos que disfrutes utilizando TaskIsi y que te ayude a mantenerte organizado y productivo en tus tareas diarias. 
