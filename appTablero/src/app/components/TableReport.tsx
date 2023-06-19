@@ -1,14 +1,14 @@
-import * as React from "react";
+import React, { useState, useMemo } from "react";
 import { Button, TextField } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-import { Scrollbars } from "react-custom-scrollbars";
 import Column from "./Column";
 
-const TableReport = () => {
-  const [columns, setColumns] = React.useState<{ [key: string]: { name: string; tasks: { id: number; title: string; description: string }[] } }>({
+const TableReport: React.FC = () => {
+  const [columns, setColumns] = useState<{ [key: string]: { name: string, tasks: { id: number; title: string; description: string }[] } }>({
     "column1": { name: "Columna 1", tasks: [] },
   });
-  const [newColumnName, setNewColumnName] = React.useState("");
+  const [newColumnName, setNewColumnName] = useState("");
+  const [columnCount, setColumnCount] = useState(1);
 
   const addColumn = () => {
     if (newColumnName.trim() !== "") {
@@ -22,23 +22,26 @@ const TableReport = () => {
         [newColumnKey]: newColumn,
       }));
       setNewColumnName("");
+      setColumnCount((prevCount) => prevCount + 1);
     }
+  };
+
+  const deleteColumn = (columnKey: string) => {
+    setColumns((prevColumns) => {
+      const { [columnKey]: deletedColumn, ...remainingColumns } = prevColumns;
+      return remainingColumns;
+    });
+    setColumnCount((prevCount) => prevCount - 1);
   };
 
   const handleColumnNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewColumnName(event.target.value);
   };
 
-  const renderThumbVertical = ({ style, ...props }: any) => {
-    const thumbStyle = {
-      backgroundColor: "#888",
-      borderRadius: "4px",
-    };
-    return <div style={{ ...style, ...thumbStyle }} {...props} />;
-  };
+  const columnKeys = useMemo(() => Object.keys(columns), [columns]);
 
   return (
-    <div style={{ marginTop: "-10px", height: "100vh", display: "flex", flexDirection: "column" }}>
+    <div style={{ marginTop: "-10px" }}>
       <div style={{ position: "sticky", top: 0, backgroundColor: "#fff", padding: "10px" }}>
         <TextField
           label="Nombre de columna"
@@ -49,18 +52,14 @@ const TableReport = () => {
         <Button variant="contained" onClick={addColumn}>
           Añadir columna
         </Button>
+        <span style={{ marginLeft: "10px" }}>Tablas creadas: {columnCount}</span>
       </div>
-      <div style={{ flex: 1, position: "relative" }}>
-        <div style={{ marginTop: "10px", display: "flex" }}>
-          {Object.keys(columns).map((columnKey) => (
-            <div key={columnKey} style={{ flex: "0 0 300px", marginRight: "10px" }}>
-              <Column column={columns[columnKey]} />
-            </div>
-          ))}
-        </div>
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}>
-          <Scrollbars autoHide autoHideTimeout={500} autoHideDuration={200} renderThumbVertical={renderThumbVertical} style={{ height: "100%" }} />
-        </div>
+      <div style={{ marginTop: "10px", display: "flex" }}>
+        {columnKeys.map((columnKey) => (
+          <div key={columnKey} style={{ flex: "0 0 300px", marginRight: "10px" }}>
+            <Column column={columns[columnKey]} deleteColumn={() => deleteColumn(columnKey)} />
+          </div>
+        ))}
       </div>
     </div>
   );
